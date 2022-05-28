@@ -34,4 +34,3 @@ jobs:
         context: .
         push: true
         tags: ${{ env.IMAGE_REPO_NAME }}:latest,${{ env.IMAGE_REPO_NAME }}:build-${{ env.BUILD_COUNTER }}
-    - run: "python build-notify.py $IMAGE_REPO_NAME:build-$BUILD_COUNTER"
