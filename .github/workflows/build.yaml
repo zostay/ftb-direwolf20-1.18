@@ -1,0 +1,37 @@
+---
+name: Build/Push
+env:
+  IMAGE_REPO_NAME: zostay/ftb-direwolf20-1.18
+  BUILD_TAG: github.com/zostay/ftb-direwolf20-1.18
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build and Push to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+    - uses: actions/setup-python@v2
+    - uses: docker/setup-buildx-action@v1
+    - uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+    - uses: actions/checkout@v2
+    - name: Install boto3
+      run: pip install boto3
+    - name: Update Build Number
+      run: "echo BUILD_COUNTER=$(python build-number.py $BUILD_TAG) >> $GITHUB_ENV"
+    - run: "echo Build $BUILD_COUNTER"
+    - uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: ${{ env.IMAGE_REPO_NAME }}:latest,${{ env.IMAGE_REPO_NAME }}:build-${{ env.BUILD_COUNTER }}
+    - run: "python build-notify.py $IMAGE_REPO_NAME:build-$BUILD_COUNTER"
