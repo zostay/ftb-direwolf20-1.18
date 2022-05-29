@@ -1,4 +1,4 @@
-FROM openjdk:17-jre
+FROM openjdk:17-jdk
 
 # Taken from jonasbonno/ftb-endeavor:1.80 and adapted to suit
 
