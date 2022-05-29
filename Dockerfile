@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk
+FROM openjdk:17-jdk-buster
 
 # Taken from jonasbonno/ftb-endeavor:1.80 and adapted to suit
 
