@@ -24,7 +24,6 @@ RUN useradd -m -U minecraft && \
     echo "#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula)." > eula.txt && \
     echo "$(date)" >> eula.txt && \
     echo "eula=true" >> eula.txt && \
-    sed -i 's/insert-jar-here/minecraft_server.1.18.2/' start.sh && \
     chown -R minecraft:minecraft /minecraft
 
 # Changing user to minecraft
