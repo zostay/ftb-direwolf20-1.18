@@ -4,4 +4,4 @@ if [ -f /minecraft/myserver.properties ]; then
     cp /minecraft/myserver.properties /minecraft/server.properties
 fi
 
-/bin/bash /minecraft/run.sh
+/bin/bash /minecraft/start.sh
